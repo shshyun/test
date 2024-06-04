@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Web Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        h1 {
+            text-align: center;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .gallery img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="file"], button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to My Personal Page</h1>
+    <p>Hello! My name is [Your Name]. This is a brief introduction about myself. I am passionate about [Your Interests].</p>
+</div>
+
+<div class="container">
+    <h2>Leave a Message</h2>
+    <form id="messageForm">
+        <div class="form-group">
+            <input type="text" id="message" placeholder="Write a message..." required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="messageBoard"></div>
+</div>
+
+<div class="container">
+    <h2>Photo Gallery</h2>
+    <form id="uploadForm">
+        <div class="form-group">
+            <input type="file" id="photo" accept="image/*" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+    <div class="gallery" id="gallery"></div>
+</div>
+
+<script>
+    // Handle message form submission
+    document.getElementById('messageForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const message = document.getElementById('message').value;
+        const messageBoard = document.getElementById('messageBoard');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = message;
+        messageBoard.appendChild(newMessage);
+        document.getElementById('messageForm').reset();
+    });
+
+    // Handle photo upload form submission
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const photoInput = document.getElementById('photo');
+        const file = photoInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const gallery = document.getElementById('gallery');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                gallery.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+        document.getElementById('uploadForm').reset();
+    });
+</script>
+
+</body>
+</html>
